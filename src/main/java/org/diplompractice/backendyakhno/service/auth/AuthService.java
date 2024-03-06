@@ -3,6 +3,7 @@ package org.diplompractice.backendyakhno.service.auth;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.diplompractice.backendyakhno.DTO.LoginUser;
+import org.diplompractice.backendyakhno.enums.Role;
 import org.diplompractice.backendyakhno.response.AuthenticationResponse;
 import org.diplompractice.backendyakhno.config.JwtUtil;
 import org.diplompractice.backendyakhno.repository.UserRepository;
@@ -16,8 +17,6 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-
     public AuthenticationResponse loginUser(LoginUser request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -50,5 +49,10 @@ public class AuthService {
         }catch(Exception e){
             return false;
         }
+    }
+
+    public boolean isAdmin(String bearerToken){
+        String token = bearerToken.substring(7);
+        return userRepository.findByUsername(JwtUtil.parseToken(token).getSubject()).get().getRole().equals(Role.ROLE_ADMIN);
     }
 }

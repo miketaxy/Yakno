@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminController {
     private final AdminService adminService;
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/registerUser", method = RequestMethod.POST)//TODO: remake for admin
     public ResponseEntity<AuthenticationResponse> register(@RequestBody LoginUser registerUser) {
         return adminService.registerUser(registerUser);
     }
+
+
 
 }

@@ -3,6 +3,7 @@ package org.diplompractice.backendyakhno.controller.auth;
 import lombok.RequiredArgsConstructor;
 
 import org.diplompractice.backendyakhno.DTO.LoginUser;
+import org.diplompractice.backendyakhno.response.AuthenticationResponse;
 import org.diplompractice.backendyakhno.service.auth.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,16 @@ public class AuthController {
     @RequestMapping(value = "/isTokenValid", method = RequestMethod.GET)
     public boolean isTokenValid(@RequestHeader("Authorization") String bearerToken) {
         return authService.isTokenValid(bearerToken);
+    }
+    @RequestMapping(value = "/isAdmin", method = RequestMethod.GET)
+    public boolean isAdmin(@RequestHeader("Authorization") String bearerToken) {
+        boolean a = authService.isAdmin(bearerToken);
+        System.out.println(a);
+        return a;
+    }
+    @RequestMapping(value = "/register", method = RequestMethod.POST)//TODO: remake for user
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody LoginUser registerUser) {
+//        return authService.registerUser(registerUser);
+        return null;
     }
 }
